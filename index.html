@@ -1,1 +1,199 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Sellers & Brands Leaderboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 1200px;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1.2em;
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+        .leaderboard-container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+        }
+        .leaderboard {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            width: 45%;
+        }
+        h2 {
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f0f4f8;
+            font-weight: bold;
+        }
+        .rank {
+            font-weight: bold;
+            color: #007bff;
+        }
+        .teaser {
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+            color: #666;
+        }
+        .cta {
+            text-align: center;
+            margin: 40px 0;
+            font-size: 1.2em;
+        }
+        .cta button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .cta button:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+            color: #888;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Discover Top Sellers & Brands</h1>
+        <p>Instantly match top sellers with leading brands in their categories. See at a glance who's dominating and how you can connect. Unlock premium insights for just $49/month – get featured, gain visibility, and drive partnerships.</p>
+    </header>
+    
+    <div class="leaderboard-container">
+        <div class="leaderboard">
+            <h2>Top Sellers</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Seller</th>
+                        <th>Main Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="rank">#1</td>
+                        <td>Premium Access Only</td>
+                        <td>Premium Access Only</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">#2</td>
+                        <td>Premium Access Only</td>
+                        <td>Premium Access Only</td>
+                    </tr>
+                    <!-- Add more premium placeholders as needed -->
+                    <tr>
+                        <td class="rank">#100+</td>
+                        <td>Example Seller A</td>
+                        <td>Electronics</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">#101</td>
+                        <td>Example Seller B</td>
+                        <td>Fashion</td>
+                    </tr>
+                    <!-- Add more free examples -->
+                </tbody>
+            </table>
+            <p class="teaser">Teaser: Lower ranks shown free. Unlock top 100 for full matching potential.</p>
+        </div>
+        
+        <div class="leaderboard">
+            <h2>Top Brands</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Brand</th>
+                        <th>Main Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="rank">#1</td>
+                        <td>Premium Access Only</td>
+                        <td>Premium Access Only</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">#2</td>
+                        <td>Premium Access Only</td>
+                        <td>Premium Access Only</td>
+                    </tr>
+                    <!-- Add more premium placeholders -->
+                    <tr>
+                        <td class="rank">#100+</td>
+                        <td>Example Brand X</td>
+                        <td>Electronics</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">#101</td>
+                        <td>Example Brand Y</td>
+                        <td>Fashion</td>
+                    </tr>
+                    <!-- Add more free examples -->
+                </tbody>
+            </table>
+            <p class="teaser">Teaser: Lower ranks shown free. Unlock top 100 for full matching potential.</p>
+        </div>
+    </div>
+    
+    <div class="cta">
+        <p>Ready to unlock premium leaderboards and get matched?</p>
+        <button onclick="alert('Sign up functionality coming soon!');">Sign Up Now - $49/month</button>
+    </div>
+    
+    <footer>
+        &copy; 2026 Leaderboard Matcher. All rights reserved.
+    </footer>
+</body>
+</html>
