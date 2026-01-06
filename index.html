@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top Sellers & Brands Leaderboard</title>
+    <title>Elite Matching Network</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7fa;
-            color: #333;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
             margin: 0;
             padding: 0;
             display: flex;
@@ -19,98 +19,141 @@
         }
         header {
             text-align: center;
-            padding: 40px 20px;
-            background-color: #ffffff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 60px 20px;
+            background-color: #1e1e1e;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1400px;
         }
         h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            font-size: 3em;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
-        p {
-            font-size: 1.2em;
-            max-width: 800px;
-            margin: 0 auto 20px;
+        .intro {
+            font-size: 1.4em;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        .benefits {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 900px;
+            margin: 20px auto;
+        }
+        .benefit {
+            text-align: center;
+            width: 30%;
+            font-size: 1.1em;
+            color: #b0b0b0;
         }
         .leaderboard-container {
             display: flex;
             justify-content: space-around;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1400px;
             padding: 20px;
         }
         .leaderboard {
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 12px;
+            padding: 25px;
             width: 45%;
+            transition: transform 0.3s ease;
+        }
+        .leaderboard:hover {
+            transform: scale(1.02);
         }
         h2 {
             text-align: center;
-            font-size: 1.8em;
-            margin-bottom: 20px;
+            font-size: 2em;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
         }
         th, td {
-            padding: 12px;
+            padding: 15px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #333;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
         th {
-            background-color: #f0f4f8;
+            background-color: #282828;
             font-weight: bold;
+            text-transform: uppercase;
+        }
+        tr:hover {
+            background-color: #333;
         }
         .rank {
             font-weight: bold;
-            color: #007bff;
+            color: #ffffff;
         }
         .teaser {
             text-align: center;
             margin-top: 20px;
             font-style: italic;
-            color: #666;
+            color: #888;
         }
         .cta {
             text-align: center;
-            margin: 40px 0;
-            font-size: 1.2em;
+            margin: 60px 0;
+        }
+        .cta p {
+            font-size: 1.5em;
+            margin-bottom: 20px;
         }
         .cta button {
-            background-color: #007bff;
-            color: white;
+            background-color: #e0e0e0;
+            color: #121212;
             border: none;
-            padding: 15px 30px;
-            font-size: 1.1em;
-            border-radius: 5px;
+            padding: 20px 40px;
+            font-size: 1.3em;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         .cta button:hover {
-            background-color: #0056b3;
+            background-color: #ffffff;
+            transform: translateY(-3px);
         }
         footer {
             text-align: center;
             padding: 20px;
             font-size: 0.9em;
-            color: #888;
+            color: #666;
             width: 100%;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Discover Top Sellers & Brands</h1>
-        <p>Instantly match top sellers with leading brands in their categories. See at a glance who's dominating and how you can connect. Unlock premium insights for just $49/month – get featured, gain visibility, and drive partnerships.</p>
+        <h1>Elite Matching Network</h1>
+        <p class="intro">Connect top sellers with premium brands. Unlock exclusive partnerships instantly.</p>
+        <div class="benefits">
+            <div class="benefit">
+                <strong>Sales Pros:</strong> Gain brand deals, boost revenue.
+            </div>
+            <div class="benefit">
+                <strong>Creators:</strong> Secure sponsorships, expand reach.
+            </div>
+            <div class="benefit">
+                <strong>Owners:</strong> Access elite sellers, scale growth.
+            </div>
+        </div>
     </header>
     
     <div class="leaderboard-container">
-        <div class="leaderboard">
+        <div class="leaderboard" onclick="alert('Unlock premium to view details and match.');">
             <h2>Top Sellers</h2>
             <table>
                 <thead>
@@ -123,15 +166,14 @@
                 <tbody>
                     <tr>
                         <td class="rank">#1</td>
-                        <td>Premium Access Only</td>
-                        <td>Premium Access Only</td>
+                        <td>Elite Access Only</td>
+                        <td>Elite Access Only</td>
                     </tr>
                     <tr>
                         <td class="rank">#2</td>
-                        <td>Premium Access Only</td>
-                        <td>Premium Access Only</td>
+                        <td>Elite Access Only</td>
+                        <td>Elite Access Only</td>
                     </tr>
-                    <!-- Add more premium placeholders as needed -->
                     <tr>
                         <td class="rank">#100+</td>
                         <td>Example Seller A</td>
@@ -142,13 +184,12 @@
                         <td>Example Seller B</td>
                         <td>Fashion</td>
                     </tr>
-                    <!-- Add more free examples -->
                 </tbody>
             </table>
-            <p class="teaser">Teaser: Lower ranks shown free. Unlock top 100 for full matching potential.</p>
+            <p class="teaser">Preview only. Elite access reveals all.</p>
         </div>
         
-        <div class="leaderboard">
+        <div class="leaderboard" onclick="alert('Unlock premium to view details and match.');">
             <h2>Top Brands</h2>
             <table>
                 <thead>
@@ -161,15 +202,14 @@
                 <tbody>
                     <tr>
                         <td class="rank">#1</td>
-                        <td>Premium Access Only</td>
-                        <td>Premium Access Only</td>
+                        <td>Elite Access Only</td>
+                        <td>Elite Access Only</td>
                     </tr>
                     <tr>
                         <td class="rank">#2</td>
-                        <td>Premium Access Only</td>
-                        <td>Premium Access Only</td>
+                        <td>Elite Access Only</td>
+                        <td>Elite Access Only</td>
                     </tr>
-                    <!-- Add more premium placeholders -->
                     <tr>
                         <td class="rank">#100+</td>
                         <td>Example Brand X</td>
@@ -180,20 +220,20 @@
                         <td>Example Brand Y</td>
                         <td>Fashion</td>
                     </tr>
-                    <!-- Add more free examples -->
                 </tbody>
             </table>
-            <p class="teaser">Teaser: Lower ranks shown free. Unlock top 100 for full matching potential.</p>
+            <p class="teaser">Preview only. Elite access reveals all.</p>
         </div>
     </div>
     
     <div class="cta">
-        <p>Ready to unlock premium leaderboards and get matched?</p>
-        <button onclick="alert('Sign up functionality coming soon!');">Sign Up Now - $49/month</button>
+        <p>Elite Access: Transform Your Network</p>
+        <button onclick="alert('Elite membership activation coming soon!');">Join Now - $499/month</button>
     </div>
     
     <footer>
-        &copy; 2026 Leaderboard Matcher. All rights reserved.
+        &copy; 2026 Elite Matching Network. Reserved for Leaders.
     </footer>
 </body>
 </html>
+```​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
