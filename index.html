@@ -3,237 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elite Matching Network</title>
+    <title>Elite Network</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@300;500&display=swap');
+
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: #121212;
-            color: #e0e0e0;
             margin: 0;
             padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
+        }
+
+        .hero {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
             justify-content: center;
-            min-height: 100vh;
-        }
-        header {
+            align-items: center;
             text-align: center;
-            padding: 60px 20px;
-            background-color: #1e1e1e;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, #000000 70%);
+            pointer-events: none;
+        }
+
+        .glow-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 6vw;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin: 0;
+            background: linear-gradient(90deg, #ffffff, #a0a0a0, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 4s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { text-shadow: 0 0 20px #ffffff; }
+            100% { text-shadow: 0 0 60px #ffffff, 0 0 80px #aaaaaa; }
+        }
+
+        .tagline {
+            font-size: 1.8vw;
+            margin: 20px 0 40px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .cta-hero {
+            background: transparent;
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            padding: 20px 50px;
+            font-size: 1.5vw;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s;
+        }
+
+        .cta-hero:hover {
+            background: #ffffff;
+            color: #000000;
+            box-shadow: 0 0 40px #ffffff;
+        }
+
+        .leaderboards {
             width: 100%;
             max-width: 1400px;
-        }
-        h1 {
-            font-size: 3em;
-            margin-bottom: 15px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-        .intro {
-            font-size: 1.4em;
-            max-width: 900px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-        .benefits {
+            padding: 100px 40px;
             display: flex;
-            justify-content: space-around;
-            width: 100%;
-            max-width: 900px;
-            margin: 20px auto;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
         }
-        .benefit {
+
+        .board {
+            background: rgba(30, 30, 30, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            width: 420px;
+            border: 1px solid #333;
+            transition: transform 0.5s;
+        }
+
+        .board:hover {
+            transform: translateY(-20px);
+        }
+
+        .board h2 {
+            font-family: 'Orbitron', sans-serif;
             text-align: center;
-            width: 30%;
-            font-size: 1.1em;
-            color: #b0b0b0;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            letter-spacing: 3px;
         }
-        .leaderboard-container {
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-            max-width: 1400px;
-            padding: 20px;
-        }
-        .leaderboard {
-            background-color: #1e1e1e;
-            border-radius: 12px;
-            padding: 25px;
-            width: 45%;
-            transition: transform 0.3s ease;
-        }
-        .leaderboard:hover {
-            transform: scale(1.02);
-        }
-        h2 {
-            text-align: center;
-            font-size: 2em;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+
         table {
             width: 100%;
             border-collapse: collapse;
         }
+
         th, td {
-            padding: 15px;
+            padding: 18px;
             text-align: left;
-            border-bottom: 1px solid #333;
-            cursor: pointer;
-            transition: background-color 0.3s;
+            border-bottom: 1px solid #444;
+            font-size: 1.1em;
         }
+
         th {
-            background-color: #282828;
-            font-weight: bold;
+            color: #aaa;
             text-transform: uppercase;
-        }
-        tr:hover {
-            background-color: #333;
-        }
-        .rank {
-            font-weight: bold;
-            color: #ffffff;
-        }
-        .teaser {
-            text-align: center;
-            margin-top: 20px;
-            font-style: italic;
-            color: #888;
-        }
-        .cta {
-            text-align: center;
-            margin: 60px 0;
-        }
-        .cta p {
-            font-size: 1.5em;
-            margin-bottom: 20px;
-        }
-        .cta button {
-            background-color: #e0e0e0;
-            color: #121212;
-            border: none;
-            padding: 20px 40px;
-            font-size: 1.3em;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
+            font-weight: 500;
             letter-spacing: 1px;
         }
-        .cta button:hover {
-            background-color: #ffffff;
-            transform: translateY(-3px);
-        }
-        footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 0.9em;
+
+        .locked {
             color: #666;
-            width: 100%;
+            font-style: italic;
+        }
+
+        .reveal {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1.1em;
+            color: #888;
+        }
+
+        .final-cta {
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .price {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4em;
+            margin: 20px 0;
+        }
+
+        .cta-final {
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            padding: 25px 60px;
+            font-size: 1.6em;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.4s;
+        }
+
+        .cta-final:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px #ffffff;
+        }
+
+        footer {
+            padding: 40px;
+            text-align: center;
+            color: #555;
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Elite Matching Network</h1>
-        <p class="intro">Connect top sellers with premium brands. Unlock exclusive partnerships instantly.</p>
-        <div class="benefits">
-            <div class="benefit">
-                <strong>Sales Pros:</strong> Gain brand deals, boost revenue.
-            </div>
-            <div class="benefit">
-                <strong>Creators:</strong> Secure sponsorships, expand reach.
-            </div>
-            <div class="benefit">
-                <strong>Owners:</strong> Access elite sellers, scale growth.
-            </div>
-        </div>
-    </header>
-    
-    <div class="leaderboard-container">
-        <div class="leaderboard" onclick="alert('Unlock premium to view details and match.');">
+
+    <section class="hero">
+        <h1 class="glow-title">Elite Network</h1>
+        <p class="tagline">Where Top Sellers Meet Premium Brands</p>
+        <button class="cta-hero" onclick="window.scrollTo({top: document.querySelector('.leaderboards').offsetTop, behavior: 'smooth'});">Enter</button>
+    </section>
+
+    <section class="leaderboards">
+        <div class="board">
             <h2>Top Sellers</h2>
             <table>
                 <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>Seller</th>
-                        <th>Main Category</th>
-                    </tr>
+                    <tr><th>Rank</th><th>Name</th><th>Category</th></tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="rank">#1</td>
-                        <td>Elite Access Only</td>
-                        <td>Elite Access Only</td>
-                    </tr>
-                    <tr>
-                        <td class="rank">#2</td>
-                        <td>Elite Access Only</td>
-                        <td>Elite Access Only</td>
-                    </tr>
-                    <tr>
-                        <td class="rank">#100+</td>
-                        <td>Example Seller A</td>
-                        <td>Electronics</td>
-                    </tr>
-                    <tr>
-                        <td class="rank">#101</td>
-                        <td>Example Seller B</td>
-                        <td>Fashion</td>
-                    </tr>
+                    <tr><td>#1</td><td class="locked">Locked</td><td class="locked">Elite Only</td></tr>
+                    <tr><td>#2</td><td class="locked">Locked</td><td class="locked">Elite Only</td></tr>
+                    <tr><td>#3</td><td class="locked">Locked</td><td class="locked">Elite Only</td></tr>
+                    <tr><td>#87</td><td>Example A</td><td>Tech</td></tr>
                 </tbody>
             </table>
-            <p class="teaser">Preview only. Elite access reveals all.</p>
+            <p class="reveal">Top 100 visible to members only</p>
         </div>
-        
-        <div class="leaderboard" onclick="alert('Unlock premium to view details and match.');">
+
+        <div class="board">
             <h2>Top Brands</h2>
             <table>
                 <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>Brand</th>
-                        <th>Main Category</th>
-                    </tr>
+                    <tr><th>Rank</th><th>Name</th><th>Category</th></tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="rank">#1</td>
-                        <td>Elite Access Only</td>
-                        <td>Elite Access Only</td>
-                    </tr>
-                    <tr>
-                        <td class="rank">#2</td>
-                        <td>Elite Access Only</td>
-                        <td>Elite Access Only</td>
-                    </tr>
-                    <tr>
-                        <td class="rank">#100+</td>
-                        <td>Example Brand X</td>
-                        <td>Electronics</td>
-                    </tr>
-                    <tr>
-                        <td class="rank">#101</td>
-                        <td>Example Brand Y</td>
-                        <td>Fashion</td>
-                    </tr>
+                    <tr><td>#1</td><td class="locked">Locked</td><td class="locked">Elite Only</td></tr>
+                    <tr><td>#2</td><td class="locked">Locked</td><td class="locked">Elite Only</td></tr>
+                    <tr><td>#3</td><td class="locked">Locked</td><td class="locked">Elite Only</td></tr>
+                    <tr><td>#91</td><td>Example X</td><td>Lifestyle</td></tr>
                 </tbody>
             </table>
-            <p class="teaser">Preview only. Elite access reveals all.</p>
+            <p class="reveal">Direct intros. No cold outreach.</p>
         </div>
-    </div>
-    
-    <div class="cta">
-        <p>Elite Access: Transform Your Network</p>
-        <button onclick="alert('Elite membership activation coming soon!');">Join Now - $499/month</button>
-    </div>
-    
+    </section>
+
+    <section class="final-cta">
+        <p>Exclusive Access</p>
+        <div class="price">$999 / month</div>
+        <button class="cta-final" onclick="alert('Membership activation launching soon.')">Join the Elite</button>
+    </section>
+
     <footer>
-        &copy; 2026 Elite Matching Network. Reserved for Leaders.
+        © 2026 Elite Network. Access Restricted.
     </footer>
+
 </body>
 </html>
-```​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
