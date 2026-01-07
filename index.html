@@ -3,236 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elite Network</title>
+    <title>TrustFlow</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@300;500&display=swap');
-
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-            color: #ffffff;
-            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+            color: #e0e0ff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-
-        .hero {
-            height: 100vh;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
             justify-content: center;
-            align-items: center;
             text-align: center;
-            position: relative;
             overflow: hidden;
         }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at center, transparent 0%, #000000 70%);
-            pointer-events: none;
+        
+        .container {
+            max-width: 1200px;
+            padding: 60px 20px;
+            position: relative;
+            z-index: 2;
         }
-
-        .glow-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 6vw;
-            letter-spacing: 8px;
-            text-transform: uppercase;
-            margin: 0;
-            background: linear-gradient(90deg, #ffffff, #a0a0a0, #ffffff);
+        
+        h1 {
+            font-size: 5rem;
+            font-weight: 800;
+            margin: 0 0 20px;
+            background: linear-gradient(90deg, #a78bfa, #ec4899, #10b981);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: pulse 4s infinite alternate;
+            line-height: 1.1;
         }
-
-        @keyframes pulse {
-            0% { text-shadow: 0 0 20px #ffffff; }
-            100% { text-shadow: 0 0 60px #ffffff, 0 0 80px #aaaaaa; }
-        }
-
-        .tagline {
-            font-size: 1.8vw;
-            margin: 20px 0 40px;
-            opacity: 0.9;
+        
+        .subtitle {
+            font-size: 1.8rem;
             font-weight: 300;
+            opacity: 0.9;
+            margin: 20px 0 60px;
+            max-width: 800px;
         }
-
-        .cta-hero {
-            background: transparent;
-            border: 2px solid #ffffff;
-            color: #ffffff;
-            padding: 20px 50px;
-            font-size: 1.5vw;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.4s;
+        
+        .visual-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin: 80px 0;
         }
-
-        .cta-hero:hover {
-            background: #ffffff;
-            color: #000000;
-            box-shadow: 0 0 40px #ffffff;
-        }
-
-        .leaderboards {
-            width: 100%;
-            max-width: 1400px;
-            padding: 100px 40px;
-            display: flex;
-            justify-content: center;
-            gap: 60px;
-            flex-wrap: wrap;
-        }
-
-        .board {
-            background: rgba(30, 30, 30, 0.6);
+        
+        .card {
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            width: 420px;
-            border: 1px solid #333;
-            transition: transform 0.5s;
+            border-radius: 24px;
+            padding: 40px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
         }
-
-        .board:hover {
-            transform: translateY(-20px);
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
-
-        .board h2 {
-            font-family: 'Orbitron', sans-serif;
-            text-align: center;
-            font-size: 2.2em;
-            margin-bottom: 30px;
-            letter-spacing: 3px;
+        
+        .card:hover .tooltip {
+            opacity: 1;
+            transform: translateY(0);
         }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        
+        .icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
         }
-
-        th, td {
-            padding: 18px;
-            text-align: left;
-            border-bottom: 1px solid #444;
-            font-size: 1.1em;
+        
+        .card h3 {
+            font-size: 1.5rem;
+            margin: 0 0 15px;
+            color: #fff;
         }
-
-        th {
-            color: #aaa;
-            text-transform: uppercase;
-            font-weight: 500;
-            letter-spacing: 1px;
+        
+        .card p {
+            opacity: 0.8;
+            line-height: 1.6;
         }
-
-        .locked {
-            color: #666;
-            font-style: italic;
+        
+        .tooltip {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translate(-50%, 10px);
+            background: rgba(16, 185, 129, 0.8);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            white-space: nowrap;
         }
-
-        .reveal {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 1.1em;
-            color: #888;
-        }
-
-        .final-cta {
-            text-align: center;
-            padding: 100px 20px;
-        }
-
-        .price {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 4em;
-            margin: 20px 0;
-        }
-
-        .cta-final {
-            background: #ffffff;
-            color: #000000;
-            border: none;
-            padding: 25px 60px;
-            font-size: 1.6em;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.4s;
-        }
-
-        .cta-final:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 50px #ffffff;
-        }
-
-        footer {
-            padding: 40px;
-            text-align: center;
-            color: #555;
-            font-size: 0.9em;
-        }
-    </style>
-</head>
-<body>
-
-    <section class="hero">
-        <h1 class="glow-title">Elite Network</h1>
-        <p class="tagline">Where Top Sellers Meet Premium Brands</p>
-        <button class="cta-hero" onclick="window.scrollTo({top: document.querySelector('.leaderboards').offsetTop, behavior: 'smooth'});">Enter</button>
-    </section>
-
-    <section class="leaderboards">
-        <div class="board">
-            <h2>Top Sellers</h2>
-            <table>
-                <thead>
-                    <tr><th>Rank</th><th>Name</th><th>Category</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>#1</td><td class="locked">Locked</td><td class="locked">Elite Only</td></tr>
-                    <tr><td>#2</td><td class="locked">Locked</td><td class="locked">Elite Only</td></tr>
-                    <tr><td>#3</td><td class="locked">Locked</td><td class="locked">Elite Only</td></tr>
-                    <tr><td>#87</td><td>Example A</td><td>Tech</td></tr>
-                </tbody>
-            </table>
-            <p class="reveal">Top 100 visible to members only</p>
-        </div>
-
-        <div class="board">
-            <h2>Top Brands</h2>
-            <table>
-                <thead>
-                    <tr><th>Rank</th><th>Name</th><th>Category</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>#1</td><td class="locked">Locked</td><td class="locked">Elite Only</td></tr>
-                    <tr><td>#2</td><td class="locked">Locked</td><td class="locked">Elite Only</td></tr>
-                    <tr><td>#3</td><td class="locked">Locked</td><td class="locked">Elite Only</td></tr>
-                    <tr><td>#91</td><td>Example X</td><td>Lifestyle</td></tr>
-                </tbody>
-            </table>
-            <p class="reveal">Direct intros. No cold outreach.</p>
-        </div>
-    </section>
-
-    <section class="final-cta">
-        <p>Exclusive Access</p>
-        <div class="price">$999 / month</div>
-        <button class="cta-final" onclick="alert('Membership activation launching soon.')">Join the Elite</button>
-    </section>
-
-    <footer>
-        © 2026 Elite Network. Access Restricted.
-    </footer>
-
-</body>
-</html>
+        
+        .dashboard-section {
+            margin: 100px 0;
+            background: rgba(255, 255, 255, 0.03​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
