@@ -149,7 +149,7 @@
   .overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.85);
+    background: rgba(0,0,0,0.9);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -165,29 +165,28 @@
   }
 
   .popup {
-    background: rgba(30,30,40,0.96);
-    padding: 40px 48px;
+    background: rgba(20,20,30,0.97);
+    padding: 32px 36px;
     border-radius: 24px;
     text-align: center;
-    max-width: 640px;
+    max-width: 700px;
     width: 90%;
     box-shadow: 0 20px 60px rgba(79,70,229,0.6);
-    backdrop-filter: blur(10px);
-    animation: popupIn 0.6s ease forwards;
+    backdrop-filter: blur(8px);
   }
 
-  .popup h2 { margin: 0 0 16px; font-size: 28px; color: #fff; }
+  .popup h2 { margin: 0 0 12px; font-size: 28px; color: #fff; }
   .popup p { margin: 0 0 24px; font-size: 17px; color: #b5b5b5; line-height: 1.6; }
 
   .popup iframe {
     border: none;
     border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
     width: 100%;
-    height: 315px;
+    height: 360px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
   }
 
-  #unmute-btn {
+  #unmute-btn, #close-btn {
     margin-top:12px;
     padding:10px 20px;
     border:none;
@@ -196,19 +195,18 @@
     color:white;
     cursor:pointer;
     font-size:14px;
+    margin-right: 10px;
   }
 
-  @keyframes popupIn {
-    from { transform: translateY(-30px) scale(0.94); opacity: 0; }
-    to { transform: translateY(0) scale(1); opacity: 1; }
+  .button-row {
+    margin-top: 12px;
   }
 
-  @media (max-width: 480px) {
-    h1 { font-size: 40px; }
-    .metric { font-size: 64px; }
-    .input-group, button.primary { width: 90%; }
-    .popup { padding: 32px; }
-    .popup iframe { height: 200px; }
+  @media (max-width: 480px){
+    h1{font-size:40px;}
+    .metric{font-size:64px;}
+    .input-group, button.primary{width:90%;}
+    .popup iframe{height:200px;}
   }
 </style>
 </head>
@@ -221,7 +219,7 @@
 
   <div class="metric-container">
     <div class="metric-label">Total Data Earnings</div>
-    <div class="metric" id="earnings">$0.00</div>
+    <div class="metric" id="earnings">.00</div>
   </div>
 
   <div class="description">Monetize your presence.</div>
@@ -246,102 +244,81 @@
 
 <div class="overlay" id="overlay">
   <div class="popup">
-    <h2 id="popup-title">Crediting $5.00…</h2>
-    <p id="popup-text">We’re generating data with our AI and analyzing your online presence. Please enjoy the entertainment...</p>
+    <h2 id="popup-title">Generating your earnings…</h2>
+    <p id="popup-text">Watch this video to boost your rewards!</p>
     <iframe id="video-frame" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
-    <button id="unmute-btn" style="display:none;">Unmute Video</button>
+    <div class="button-row">
+      <button id="unmute-btn">Unmute Video</button>
+      <button id="close-btn">Finish Earning</button>
+    </div>
   </div>
 </div>
 
 <script>
 /* STARFIELD */
-const canvas = document.getElementById("stars");
-const ctx = canvas.getContext("2d");
+const canvas=document.getElementById("stars");
+const ctx=canvas.getContext("2d");
 let w,h;
 function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight;}
 addEventListener("resize",resize);
 resize();
-
 const stars=Array.from({length:200},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.4,s:Math.random()*0.5+0.1}));
-function animateStars(){
-  ctx.clearRect(0,0,w,h);
-  stars.forEach(s=>{
-    s.y+=s.s;
-    if(s.y>h) s.y=0;
-    ctx.beginPath();
-    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-    ctx.fillStyle="#fff";
-    ctx.fill();
-  });
-  requestAnimationFrame(animateStars);
-}
+function animateStars(){ctx.clearRect(0,0,w,h);stars.forEach(s=>{s.y+=s.s;if(s.y>h)s.y=0;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle="#fff";ctx.fill();});requestAnimationFrame(animateStars);}
 animateStars();
 
 /* Toggle socials */
-function toggleSocials(){
-  const s=document.getElementById("socials");
-  s.style.display = s.style.display==="none" ? "flex" : "none";
-}
+function toggleSocials(){const s=document.getElementById("socials");s.style.display=s.style.display==="none"?"flex":"none";}
 function addDataSource(){alert("Feature coming soon!");}
 
-/* Animate earnings */
-let currentAmount = 0;
-const earningsEl = document.getElementById("earnings");
-const popupTitle = document.getElementById("popup-title");
+/* Earnings system */
+let earnings = 0;
+let earningsInterval;
 
-function updateEarningsDisplay(amount) {
-  earningsEl.innerText = `$`;
-  popupTitle.innerText = `Crediting $…`;
+function startEarnings() {
+  earnings = 0;
+  const earningsEl = document.getElementById("earnings");
+  earningsInterval = setInterval(()=>{
+    earnings += 0.05; // earn 5 cents every ~0.1s
+    earningsEl.innerText = `$`;
+  },100);
 }
 
-function countUpEarnings(target=5.00, duration=2200){
-  currentAmount = 0;
-  updateEarningsDisplay(0);
-  const increment = target / (duration / 16);
-  const timer = setInterval(()=>{
-    currentAmount += increment;
-    if(currentAmount >= target){
-      currentAmount = target;
-      clearInterval(timer);
-    }
-    updateEarningsDisplay(currentAmount);
-  }, 16);
+function stopEarnings(){
+  clearInterval(earningsInterval);
 }
 
 /* Start monetization */
 function start(){
-  const website = document.getElementById("website").value.trim();
-  if(!website){alert("Please enter your website URL to begin."); return;}
+  const website=document.getElementById("website").value.trim();
+  if(!website){alert("Please enter your website URL to begin.");return;}
 
-  const overlay = document.getElementById("overlay");
-  const videoFrame = document.getElementById("video-frame");
-  const unmuteBtn = document.getElementById("unmute-btn");
+  const overlay=document.getElementById("overlay");
+  const videoFrame=document.getElementById("video-frame");
+  const unmuteBtn=document.getElementById("unmute-btn");
+  const closeBtn=document.getElementById("close-btn");
 
   overlay.classList.add("show");
 
-  // Reset
-  currentAmount = 0;
-  updateEarningsDisplay(0);
+  // Start earnings
+  startEarnings();
 
-  // Relaxing piano + rain video (1 hour, calm & loopable)
-  const videoId = "fbPo9VWbJhE";  // You can change this ID if you want a different video
+  // Video setup
+  const videoId = "-qofRaO3AsA"; // replace with any video
   videoFrame.src = `https://www.youtube.com/embed/?autoplay=1&mute=1&loop=1&playlist=&rel=0&controls=1`;
 
-  countUpEarnings(5.00, 2200);
-
-  // Unmute button (click to reload with sound)
-  unmuteBtn.style.display = "inline-block";
-  unmuteBtn.onclick = () => {
-    videoFrame.src = `https://www.youtube.com/embed/?autoplay=1&mute=0&loop=1&playlist=&rel=0&controls=1`;
-    unmuteBtn.style.display = "none";
+  // Unmute button
+  unmuteBtn.style.display="inline-block";
+  unmuteBtn.onclick=()=>{
+    videoFrame.src=`https://www.youtube.com/embed/?autoplay=1&mute=0&loop=1&playlist=&rel=0&controls=1`;
+    unmuteBtn.style.display="none";
   };
 
-  // Auto-close after ~8 seconds (longer to feel more realistic)
-  setTimeout(()=>{
+  // Close button
+  closeBtn.onclick=()=>{
     overlay.classList.remove("show");
-    videoFrame.src = "";
-    unmuteBtn.style.display = "none";
-  }, 8000);
+    videoFrame.src="";
+    stopEarnings();
+  };
 }
 </script>
 
