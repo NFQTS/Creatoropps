@@ -3,269 +3,240 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Data Ownership</title>
-
+<title>Investor One-Slide Pitch</title>
 <style>
-* { box-sizing:border-box; margin:0; padding:0; }
+  /* Reset */
+  * { margin:0; padding:0; box-sizing:border-box; }
 
-body {
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
-  background:#0b0b0b;
-  color:#eaeaea;
-  overflow:hidden;
-}
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #000;
+    color: #fff;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
 
-canvas {
-  position:fixed;
-  inset:0;
-  z-index:-2;
-}
+  .container {
+    max-width: 900px;
+    text-align: center;
+    padding: 60px 40px;
+    background: rgba(0,0,0,0.9);
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(255,255,255,0.1);
+    position: relative;
+  }
 
-.wrap {
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  padding:24px;
-  text-align:center;
-}
+  /* Logo */
+  .your-logo {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 40px;
+    opacity: 0.9;
+    animation: fadeIn 1s ease forwards;
+  }
 
-h1 {
-  font-size:48px;
-  margin-bottom:16px;
-  background:linear-gradient(135deg,#fff,#a78bfa);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    color: #fff;
+    letter-spacing: 1px;
+    text-shadow: 0 0 15px #fff;
+    animation: fadeIn 1s ease forwards 0.5s;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
 
-.metric-label {
-  font-size:16px;
-  color:#9ca3af;
-}
+  .subheadline {
+    font-size: 1.8rem;
+    margin-bottom: 60px;
+    opacity: 0.9;
+    font-weight: normal;
+  }
 
-.metric {
-  font-size:72px;
-  font-weight:700;
-  margin:8px 0 32px;
-}
+  ul {
+    list-style: none;
+    font-size: 1.5rem;
+    max-width: 700px;
+    margin: 0 auto 60px auto;
+    padding-left: 0;
+  }
 
-.description {
-  font-size:18px;
-  color:#b5b5b5;
-  margin-bottom:32px;
-}
+  li {
+    margin-bottom: 40px;
+    position: relative;
+    padding-left: 50px;
+    opacity: 0;
+    transform: translateX(-50px);
+    animation: slideIn 0.7s forwards;
+  }
 
-.input-group {
-  width:320px;
-  max-width:100%;
-  margin-bottom:14px;
-}
+  li:nth-child(1){ animation-delay: 1s; }
+  li:nth-child(2){ animation-delay: 1.6s; }
+  li:nth-child(3){ animation-delay: 2.2s; }
 
-input {
-  width:100%;
-  padding:16px;
-  border-radius:14px;
-  border:none;
-  background:rgba(255,255,255,0.08);
-  color:white;
-  font-size:15px;
-}
+  li::before {
+    content: "✔";
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 2rem;
+    color: #fff;
+  }
 
-input:focus {
-  outline:none;
-  box-shadow:0 0 0 3px rgba(124,58,237,.35);
-}
+  /* Big button */
+  .action-button {
+    display: inline-block;
+    padding: 20px 50px;
+    font-size: 1.5rem;
+    color: #000;
+    background: #fff;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    letter-spacing: 1px;
+    box-shadow: 0 10px 30px rgba(255,255,255,0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-bottom: 60px;
+  }
 
-button.primary {
-  width:320px;
-  max-width:100%;
-  padding:18px;
-  border-radius:16px;
-  border:none;
-  background:linear-gradient(135deg,#4f46e5,#7c3aed);
-  color:white;
-  font-size:17px;
-  font-weight:600;
-  cursor:pointer;
-  box-shadow:0 12px 36px rgba(79,70,229,.4);
-}
+  .action-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 50px rgba(255,255,255,0.5);
+  }
 
-button.primary:hover {
-  transform:translateY(-2px);
-}
+  /* Integrations section */
+  .integrations {
+    margin-top: 0;
+  }
 
-.overlay {
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.92);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  opacity:0;
-  pointer-events:none;
-  transition:.4s;
-  z-index:10;
-}
+  .integrations-text {
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+    opacity: 0.8;
+  }
 
-.overlay.show {
-  opacity:1;
-  pointer-events:auto;
-}
+  .logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 80px;
+    flex-wrap: wrap;
+  }
 
-.popup {
-  background:rgba(20,20,30,.97);
-  padding:32px;
-  border-radius:22px;
-  max-width:900px;
-  width:90%;
-  box-shadow:0 20px 60px rgba(79,70,229,.6);
-}
+  .logo-btn {
+    width: 160px;
+    height: 160px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    cursor: pointer;
+  }
 
-.popup h2 {
-  font-size:28px;
-  margin-bottom:8px;
-}
+  .logo-btn:hover {
+    transform: translateY(-10px) scale(1.1);
+    background: rgba(255,255,255,0.2);
+    box-shadow: 0 20px 40px rgba(255,255,255,0.2);
+  }
 
-.popup p {
-  color:#b5b5b5;
-  margin-bottom:24px;
-}
+  .logo-btn img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+  }
 
-.flex {
-  display:flex;
-  gap:24px;
-  flex-wrap:wrap;
-}
+  /* Data circle visual */
+  .data-circle {
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    opacity: 0.1;
+    animation: rotateCircle 20s linear infinite;
+  }
 
-video {
-  width:100%;
-  border-radius:14px;
-  background:black;
-}
+  .data-circle-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px dashed #fff;
+  }
 
-.small {
-  font-size:14px;
-  color:#9ca3af;
-  margin-top:10px;
-}
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px);}
+    to { opacity: 1; transform: translateY(0);}
+  }
 
-.close {
-  margin-top:20px;
-  background:none;
-  border:none;
-  color:#9ca3af;
-  cursor:pointer;
-}
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-50px);}
+    to { opacity: 1; transform: translateX(0);}
+  }
+
+  @keyframes rotateCircle {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    h1 { font-size: 2rem; }
+    .subheadline { font-size: 1.4rem; }
+    ul { font-size: 1.2rem; }
+    .action-button { font-size: 1.2rem; padding: 15px 40px; }
+    .your-logo { width: 90px; height: 90px; }
+    .logos { gap: 40px; }
+    .logo-btn { width: 120px; height: 120px; }
+    .logo-btn img { width: 70px; height: 70px; }
+    .integrations-text { font-size: 1.1rem; }
+  }
 </style>
 </head>
-
 <body>
+  <div class="container">
+    <!-- Your Logo (local path in your GitHub repo, e.g., /assets/logo.png) -->
+    <img src="assets/logo.png" alt="Your Company Logo" class="your-logo">
 
-<canvas id="stars"></canvas>
+    <h1>Your Data. Your Value.</h1>
+    <div class="subheadline">Monetize Your Content & Data – From Anywhere</div>
+    <ul>
+      <li>Verified, high-quality videos, photos, car data & more</li>
+      <li>Fair rewards for sharing what you already create</li>
+      <li>Easy tools to manage, produce, and distribute</li>
+    </ul>
 
-<div class="wrap">
-  <h1>Data Ownership</h1>
+    <a href="#" class="action-button">Connect to Your Tesla</a>
 
-  <div class="metric-label">Ownership Credits</div>
-  <div class="metric" id="credits">0</div>
-
-  <div class="description">Monetize your presence.</div>
-
-  <div class="input-group">
-    <input id="website" placeholder="Website URL (required)">
-  </div>
-
-  <button class="primary" onclick="openHub()">Begin Monetization</button>
-</div>
-
-<!-- PRIVATE MEDIA HUB -->
-<div class="overlay" id="hub">
-  <div class="popup">
-    <h2>Private Media Ledger</h2>
-    <p>Watch or contribute. Ownership accrues automatically.</p>
-
-    <div class="flex">
-      <!-- WATCH -->
-      <div style="flex:1;min-width:260px">
-        <video id="player" controls playsinline>
-          <source src="sample.mp4" type="video/mp4">
-        </video>
-        <div class="small">Credits awarded after meaningful engagement.</div>
-      </div>
-
-      <!-- UPLOAD -->
-      <div style="flex:1;min-width:260px">
-        <div class="input-group">
-          <input type="file" id="upload" accept="video/*">
+    <div class="integrations">
+      <div class="integrations-text">Connect Your Favorite Platforms</div>
+      <div class="logos">
+        <!-- Tesla Logo -->
+        <div class="logo-btn" title="Connect Tesla">
+          <img src="assets/tesla.svg" alt="Tesla">
         </div>
-        <button class="primary" onclick="uploadVideo()">Upload & Earn</button>
-        <div class="small" id="uploadStatus"></div>
+
+        <!-- TikTok Logo -->
+        <div class="logo-btn" title="Connect TikTok">
+          <img src="assets/tiktok.svg" alt="TikTok">
+        </div>
+
+        <!-- YouTube Logo -->
+        <div class="logo-btn" title="Connect YouTube">
+          <img src="assets/youtube.svg" alt="YouTube">
+        </div>
       </div>
     </div>
 
-    <button class="close" onclick="closeHub()">Close</button>
+    <div class="data-circle"><div class="data-circle-inner"></div></div>
   </div>
-</div>
-
-<script>
-// STARFIELD
-const canvas = document.getElementById("stars");
-const ctx = canvas.getContext("2d");
-let w,h;
-function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight;}
-addEventListener("resize",resize);resize();
-const stars=Array.from({length:160},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.2,s:Math.random()*.4+.1}));
-(function anim(){
-  ctx.clearRect(0,0,w,h);
-  stars.forEach(s=>{
-    s.y+=s.s;if(s.y>h)s.y=0;
-    ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-    ctx.fillStyle="#fff";ctx.fill();
-  });
-  requestAnimationFrame(anim);
-})();
-
-// APP LOGIC
-let credits = 0;
-let rewarded = false;
-
-function openHub(){
-  if(!website.value.trim()) return alert("Enter your website.");
-  hub.classList.add("show");
-}
-
-function closeHub(){
-  hub.classList.remove("show");
-}
-
-function addCredits(n){
-  credits += n;
-  creditsEl = document.getElementById("credits");
-  creditsEl.innerText = credits;
-  creditsEl.style.transform="scale(1.06)";
-  setTimeout(()=>creditsEl.style.transform="scale(1)",150);
-}
-
-// WATCH REWARD
-player.addEventListener("timeupdate",()=>{
-  if(!rewarded && player.currentTime > 30){
-    rewarded = true;
-    addCredits(5);
-  }
-});
-
-// UPLOAD
-function uploadVideo(){
-  const file = upload.files[0];
-  if(!file) return;
-  uploadStatus.innerText = "Processing upload…";
-  setTimeout(()=>{
-    uploadStatus.innerText = "Upload approved. Credits added.";
-    addCredits(25);
-  },1200);
-}
-</script>
-
 </body>
 </html>
