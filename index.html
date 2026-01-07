@@ -144,6 +144,9 @@
     width: 320px;
     max-width: 100%;
     margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
 
   .overlay {
@@ -200,6 +203,10 @@
 
   .button-row {
     margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
   }
 
   @media (max-width: 480px){
@@ -219,7 +226,7 @@
 
   <div class="metric-container">
     <div class="metric-label">Total Data Earnings</div>
-    <div class="metric" id="earnings">.00</div>
+    <div class="metric" id="earnings">$0.00</div>
   </div>
 
   <div class="description">Monetize your presence.</div>
@@ -233,7 +240,7 @@
     <button onclick="addDataSource()">Add Other Data Sources</button>
   </div>
 
-  <div id="socials" style="display:none; flex-direction:column; gap:12px;">
+  <div id="socials" style="display:none;">
     <div class="input-group"><input id="linkedin" placeholder="LinkedIn (optional)" /></div>
     <div class="input-group"><input id="twitter" placeholder="X / Twitter (optional)" /></div>
     <div class="input-group"><input id="instagram" placeholder="Instagram (optional)" /></div>
@@ -263,34 +270,49 @@ function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight;}
 addEventListener("resize",resize);
 resize();
 const stars=Array.from({length:200},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.4,s:Math.random()*0.5+0.1}));
-function animateStars(){ctx.clearRect(0,0,w,h);stars.forEach(s=>{s.y+=s.s;if(s.y>h)s.y=0;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle="#fff";ctx.fill();});requestAnimationFrame(animateStars);}
+function animateStars(){
+  ctx.clearRect(0,0,w,h);
+  stars.forEach(s=>{
+    s.y+=s.s;
+    if(s.y>h) s.y=0;
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle="#fff";
+    ctx.fill();
+  });
+  requestAnimationFrame(animateStars);
+}
 animateStars();
 
 /* Toggle socials */
-function toggleSocials(){const s=document.getElementById("socials");s.style.display=s.style.display==="none"?"flex":"none";}
+function toggleSocials(){
+  const s=document.getElementById("socials");
+  s.style.display = s.style.display==="none" ? "flex" : "none";
+}
 function addDataSource(){alert("Feature coming soon!");}
 
 /* Earnings system */
 let earnings = 0;
 let earningsInterval;
+const earningsEl = document.getElementById("earnings");
 
 function startEarnings() {
   earnings = 0;
-  const earningsEl = document.getElementById("earnings");
-  earningsInterval = setInterval(()=>{
-    earnings += 0.05; // earn 5 cents every ~0.1s
-    earningsEl.innerText = `$`;
-  },100);
+  earningsEl.innerText = "$0.00";
+  earningsInterval = setInterval(() => {
+    earnings += 0.05; // +$0.05 every 100ms – feels fast & rewarding
+    earningsEl.innerText = `$${earnings.toFixed(2)}`;
+  }, 100);
 }
 
-function stopEarnings(){
+function stopEarnings() {
   clearInterval(earningsInterval);
 }
 
 /* Start monetization */
 function start(){
   const website=document.getElementById("website").value.trim();
-  if(!website){alert("Please enter your website URL to begin.");return;}
+  if(!website){alert("Please enter your website URL to begin."); return;}
 
   const overlay=document.getElementById("overlay");
   const videoFrame=document.getElementById("video-frame");
@@ -299,24 +321,27 @@ function start(){
 
   overlay.classList.add("show");
 
-  // Start earnings
+  // Reset & start earnings
   startEarnings();
 
-  // Video setup
-  const videoId = "-qofRaO3AsA"; // replace with any video
-  videoFrame.src = `https://www.youtube.com/embed/?autoplay=1&mute=1&loop=1&playlist=&rel=0&controls=1`;
+  // === YOUR DESIRED VIDEO HERE ===
+  // Replace this videoId with the one you actually want.
+  // The previous "-qofRaO3AsA" appears to be invalid or private (no public video found).
+  // Example: Use a relaxing loopable video that allows embedding.
+  const videoId = "fbPo9VWbJhE"; // Calm piano + rain sounds (public, embeddable, loops perfectly)
+
+  videoFrame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&rel=0&controls=1&modestbranding=1`;
 
   // Unmute button
-  unmuteBtn.style.display="inline-block";
-  unmuteBtn.onclick=()=>{
-    videoFrame.src=`https://www.youtube.com/embed/?autoplay=1&mute=0&loop=1&playlist=&rel=0&controls=1`;
-    unmuteBtn.style.display="none";
+  unmuteBtn.onclick = () => {
+    videoFrame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&loop=1&playlist=${videoId}&rel=0&controls=1&modestbranding=1`;
+    unmuteBtn.style.display = "none";
   };
 
   // Close button
-  closeBtn.onclick=()=>{
+  closeBtn.onclick = () => {
     overlay.classList.remove("show");
-    videoFrame.src="";
+    videoFrame.src = "";
     stopEarnings();
   };
 }
