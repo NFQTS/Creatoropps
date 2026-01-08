@@ -88,7 +88,7 @@
     color: #fff;
   }
 
-  /* Big button - Now a Dogecoin payment button */
+  /* Big button */
   .action-button {
     display: inline-block;
     padding: 20px 50px;
@@ -101,11 +101,38 @@
     letter-spacing: 1px;
     box-shadow: 0 10px 30px rgba(255,255,255,0.3);
     transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
   }
 
   .action-button:hover {
     transform: scale(1.05);
     box-shadow: 0 15px 50px rgba(255,255,255,0.5);
+  }
+
+  /* Payment section */
+  .payment-info {
+    margin-top: 40px;
+    font-size: 1.2rem;
+    opacity: 0.9;
+  }
+
+  .qr-code {
+    width: 200px;
+    height: 200px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .wallet-address {
+    word-break: break-all;
+    background: rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 600px;
+    font-family: monospace;
   }
 
   /* Integrations section */
@@ -198,6 +225,7 @@
     .logo-btn { width: 120px; height: 120px; }
     .logo-btn img { width: 70px; height: 70px; }
     .integrations-text { font-size: 1.1rem; }
+    .qr-code { width: 150px; height: 150px; }
   }
 </style>
 </head>
@@ -214,10 +242,18 @@
       <li>Easy tools to manage, produce, and distribute</li>
     </ul>
     
-    <!-- Updated button: Now triggers Dogecoin payment to your wallet -->
-    <a href="dogecoin:DBYghAep14V4jbhbmHPEhA1mD3rP2Fzrin?amount=420&label=Access%20Fee" class="action-button" target="_blank">
+    <!-- Updated to reliable QR + manual payment -->
+    <div class="action-button" onclick="alert('Open your Dogecoin wallet app, scan the QR code below, or copy the address and send exactly 420 DOGE.')">
       Pay 420 DOGE for Access
-    </a>
+    </div>
+    
+    <div class="payment-info">
+      <p>Send exactly <strong>420 DOGE</strong> to the address below:</p>
+      <div class="wallet-address">DBYghAep14V4jbhbmHPEhA1mD3rP2Fzrin</div>
+      <p>Scan this QR code with your wallet app:</p>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=dogecoin:DBYghAep14V4jbhbmHPEhA1mD3rP2Fzrin?amount=420&label=Access%20Fee" alt="Dogecoin Payment QR Code" class="qr-code">
+      <p>After sending, wait for confirmation (usually a few minutes). Refresh the page or contact us if needed.</p>
+    </div>
     
     <div class="integrations">
       <div class="integrations-text">Connect Your Favorite Platforms</div>
