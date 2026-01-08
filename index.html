@@ -36,7 +36,7 @@
     margin-bottom: 40px;
     opacity: 0.9;
     animation: fadeIn 1s ease forwards;
-    object-fit: contain; /* Ensures the logo fits nicely without distortion */
+    object-fit: contain;
   }
 
   h1 {
@@ -88,7 +88,7 @@
     color: #fff;
   }
 
-  /* Big button */
+  /* Buttons */
   .action-button {
     display: inline-block;
     padding: 20px 50px;
@@ -101,11 +101,38 @@
     letter-spacing: 1px;
     box-shadow: 0 10px 30px rgba(255,255,255,0.3);
     transition: transform 0.2s, box-shadow 0.2s;
+    margin: 10px;
   }
 
   .action-button:hover {
     transform: scale(1.05);
     box-shadow: 0 15px 50px rgba(255,255,255,0.5);
+  }
+
+  .doge-button {
+    background: #c2a633; /* DOGE gold/yellow */
+    color: #000;
+  }
+
+  /* DOGE Payment Section */
+  #doge-payment {
+    margin-top: 40px;
+    padding: 30px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    display: none;
+  }
+
+  #doge-info {
+    margin-top: 20px;
+    font-size: 1.4rem;
+    line-height: 1.6;
+  }
+
+  #qrcode {
+    margin: 30px auto;
+    width: 256px;
+    height: 256px;
   }
 
   /* Integrations section */
@@ -200,6 +227,7 @@
     .integrations-text { font-size: 1.1rem; }
   }
 </style>
+<script src="https://unpkg.com/qrcodejs@1.0.0/qrcode.min.js"></script>
 </head>
 <body>
   <div class="container">
@@ -213,7 +241,23 @@
       <li>Fair rewards for sharing what you already create</li>
       <li>Easy tools to manage, produce, and distribute</li>
     </ul>
+    
     <a href="#" class="action-button">Join & Start Earning</a>
+    
+    <!-- New DOGE Early Access Button -->
+    <a href="javascript:void(0);" onclick="showDogePayment()" class="action-button doge-button">
+      Lock In Early Access – 420 DOGE (Founders Tier)
+    </a>
+    
+    <!-- DOGE Payment Section (hidden until clicked) -->
+    <div id="doge-payment">
+      <h2 style="margin-bottom:20px;">Early Access: Pay 420 DOGE</h2>
+      <p>Launch Feb 2026 – Pay with DOGE like Tesla Shop merch! 🚀<br>
+      Limited founders tier – secure your spot now.</p>
+      
+      <div id="qrcode"></div>
+      <div id="doge-info"></div>
+    </div>
     
     <div class="integrations">
       <div class="integrations-text">Connect Your Favorite Platforms</div>
@@ -237,5 +281,35 @@
     
     <div class="data-circle"><div class="data-circle-inner"></div></div>
   </div>
+
+  <script>
+    const yourWallet = "YOUR_DOGE_WALLET_ADDRESS_HERE"; // ← REPLACE THIS!
+    const dogeAmount = 420; // Fixed meme amount
+
+    function showDogePayment() {
+      document.getElementById('doge-payment').style.display = 'block';
+      generateDogeQR();
+    }
+
+    function generateDogeQR() {
+      const qrDiv = document.getElementById("qrcode");
+      qrDiv.innerHTML = ""; // Clear previous
+
+      const uri = `dogecoin:${yourWallet}?amount=${dogeAmount}`;
+      new QRCode(qrDiv, {
+        text: uri,
+        width: 256,
+        height: 256,
+        colorDark: "#ffffff",
+        colorLight: "#000000"
+      });
+
+      document.getElementById("doge-info").innerHTML = 
+        `<strong>Send exactly 420 DOGE</strong><br>
+         To address: <strong>${yourWallet}</strong><br><br>
+         Scan the QR with your DOGE wallet (e.g., MyDoge app).<br>
+         Payment confirms in seconds – we'll verify on the blockchain and grant early access!`;
+    }
+  </script>
 </body>
 </html>
