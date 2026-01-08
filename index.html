@@ -3,63 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UnprincipledInc.</title>
+<title>Unprincipled Inc.</title>
 <style>
+  /* Reset */
   * { margin:0; padding:0; box-sizing:border-box; }
 
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #000;
-    color: #fff;
+    background: #000; /* pure black background */
+    color: #fff; /* white text for max contrast */
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    position: relative;
-  }
-
-  /* Star animation for space theme */
-  .star {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: #fff;
-    opacity: 0.8;
-    border-radius: 50%;
-    animation: fall linear infinite;
-  }
-
-  @keyframes fall {
-    0% { transform: translateY(-10px); opacity: 0.8; }
-    100% { transform: translateY(110vh); opacity: 0; }
   }
 
   .container {
     max-width: 900px;
     text-align: center;
     padding: 60px 40px;
-    z-index: 2;
+    background: rgba(0,0,0,0.9); /* subtle contrast panel */
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(255,255,255,0.1);
+    position: relative;
   }
 
+  /* Your Logo at Top */
   .your-logo {
     width: 120px;
     height: 120px;
     margin-bottom: 40px;
+    opacity: 0.9;
+    animation: fadeIn 1s ease forwards;
+    object-fit: contain; /* Ensures the logo fits nicely without distortion */
   }
 
   h1 {
     font-size: 3rem;
     margin-bottom: 20px;
     line-height: 1.2;
+    color: #fff;
+    letter-spacing: 1px;
     text-shadow: 0 0 15px #fff;
+    animation: fadeIn 1s ease forwards 0.5s;
+    opacity: 0;
+    animation-fill-mode: forwards;
   }
 
   .subheadline {
     font-size: 1.8rem;
     margin-bottom: 60px;
-    font-weight: normal;
     opacity: 0.9;
+    font-weight: normal;
   }
 
   ul {
@@ -74,7 +70,14 @@
     margin-bottom: 40px;
     position: relative;
     padding-left: 50px;
+    opacity: 0;
+    transform: translateX(-50px);
+    animation: slideIn 0.7s forwards;
   }
+
+  li:nth-child(1){ animation-delay: 1s; }
+  li:nth-child(2){ animation-delay: 1.6s; }
+  li:nth-child(3){ animation-delay: 2.2s; }
 
   li::before {
     content: "✔";
@@ -85,6 +88,7 @@
     color: #fff;
   }
 
+  /* Big button */
   .action-button {
     display: inline-block;
     padding: 20px 50px;
@@ -97,7 +101,6 @@
     letter-spacing: 1px;
     box-shadow: 0 10px 30px rgba(255,255,255,0.3);
     transition: transform 0.2s, box-shadow 0.2s;
-    margin-bottom: 60px;
   }
 
   .action-button:hover {
@@ -105,8 +108,9 @@
     box-shadow: 0 15px 50px rgba(255,255,255,0.5);
   }
 
+  /* Integrations section */
   .integrations {
-    margin-top: 0;
+    margin-top: 60px;
   }
 
   .integrations-text {
@@ -124,31 +128,66 @@
   }
 
   .logo-btn {
-    width: 140px;
-    height: 140px;
-    background: rgba(255,255,255,0.05);
+    width: 160px;
+    height: 160px;
+    background: rgba(255,255,255,0.1);
     border-radius: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
     transition: all 0.3s ease;
-    box-shadow: 0 8px 20px rgba(255,255,255,0.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     cursor: pointer;
   }
 
   .logo-btn:hover {
     transform: translateY(-10px) scale(1.1);
-    background: rgba(255,255,255,0.15);
-    box-shadow: 0 20px 40px rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.2);
+    box-shadow: 0 20px 40px rgba(255,255,255,0.2);
   }
 
   .logo-btn img {
     width: 100px;
     height: 100px;
     object-fit: contain;
-    filter: grayscale(100%);
   }
 
+  /* Data circle visual */
+  .data-circle {
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    opacity: 0.1;
+    animation: rotateCircle 20s linear infinite;
+  }
+
+  .data-circle-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px dashed #fff;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px);}
+    to { opacity: 1; transform: translateY(0);}
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-50px);}
+    to { opacity: 1; transform: translateX(0);}
+  }
+
+  @keyframes rotateCircle {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Responsive */
   @media (max-width: 600px) {
     h1 { font-size: 2rem; }
     .subheadline { font-size: 1.4rem; }
@@ -156,61 +195,47 @@
     .action-button { font-size: 1.2rem; padding: 15px 40px; }
     .your-logo { width: 90px; height: 90px; }
     .logos { gap: 40px; }
-    .logo-btn { width: 100px; height: 100px; }
-    .logo-btn img { width: 60px; height: 60px; }
+    .logo-btn { width: 120px; height: 120px; }
+    .logo-btn img { width: 70px; height: 70px; }
     .integrations-text { font-size: 1.1rem; }
   }
 </style>
 </head>
 <body>
+  <div class="container">
+    <!-- Your actual logo from the same directory -->
+    <img src="IMG_1817.jpeg" alt="Unprincipled Inc. Logo" class="your-logo">
 
-<!-- Star field -->
-<script>
-  const starCount = 100;
-  for (let i=0; i<starCount; i++){
-    const star = document.createElement('div');
-    star.className = 'star';
-    star.style.left = Math.random()*100 + 'vw';
-    star.style.top = Math.random()*100 + 'vh';
-    star.style.animationDuration = 2 + Math.random()*3 + 's';
-    star.style.width = star.style.height = Math.random()*2+1+'px';
-    document.body.appendChild(star);
-  }
-</script>
-
-<div class="container">
-  <!-- Placeholder logo -->
-  <img src="IMG_1817.jpeg" alt="Your Logo" class="your-logo">
-
-  <h1>Your Data. Your Value.</h1>
-  <div class="subheadline">Monetize Your Content & Data – From Anywhere</div>
-
-  <ul>
-    <li>Verified, high-quality videos, photos, car data & more</li>
-    <li>Fair rewards for sharing what you already create</li>
-    <li>Easy tools to manage, produce, and distribute</li>
-  </ul>
-
-  <a href="#" class="action-button">Join the Network</a>
-
-  <div class="integrations">
-    <div class="integrations-text">Connect Your Favorite Platforms</div>
-    <div class="logos">
-      <!-- Tesla -->
-      <div class="logo-btn" title="Connect Tesla">
-        <img src="assets/tesla.svg" alt="Tesla">
-          <a href="/Tesla.html">Connect Tesla</a>
-      </div>
-      <!-- TikTok -->
-      <div class="logo-btn" title="Connect TikTok">
-        <img src="assets/tiktok.svg" alt="TikTok">
-      </div>
-      <!-- YouTube -->
-      <div class="logo-btn" title="Connect YouTube">
-        <img src="assets/youtube.svg" alt="YouTube">
+    <h1>Your Data. Your Value.</h1>
+    <div class="subheadline">Monetize Your Content & Data – From Anywhere</div>
+    <ul>
+      <li>Verified, high-quality videos, photos, car data & more</li>
+      <li>Fair rewards for sharing what you already create</li>
+      <li>Easy tools to manage, produce, and distribute</li>
+    </ul>
+    <a href="#" class="action-button">Join & Start Earning</a>
+    
+    <div class="integrations">
+      <div class="integrations-text">Connect Your Favorite Platforms</div>
+      <div class="logos">
+        <!-- Tesla -->
+        <div class="logo-btn" title="Connect Tesla">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/b/bb/Tesla_T_symbol.svg" alt="Tesla">
+        </div>
+        
+        <!-- TikTok -->
+        <div class="logo-btn" title="Connect TikTok">
+          <img src="https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg" alt="TikTok">
+        </div>
+        
+        <!-- YouTube -->
+        <div class="logo-btn" title="Connect YouTube">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" alt="YouTube">
+        </div>
       </div>
     </div>
+    
+    <div class="data-circle"><div class="data-circle-inner"></div></div>
   </div>
-</div>
 </body>
 </html>
