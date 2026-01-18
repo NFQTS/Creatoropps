@@ -337,7 +337,7 @@ h1 {
 
 /* ---------- CONTINUE BUTTON ---------- */
 .action-btn {
-  margin-top: 0.8rem;
+  margin-top: 2.2rem;
   font-size: 0.85rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -345,9 +345,15 @@ h1 {
   text-decoration: none;
   position: relative;
   display: inline-block;
-  opacity: 0.85;
+  opacity: 0;
+  pointer-events: none;
   transition: opacity 0.4s ease, transform 0.4s ease;
   cursor: pointer;
+}
+
+.action-btn.show {
+  opacity: 0.85;
+  pointer-events: auto;
 }
 
 .action-btn:hover { opacity: 1; transform: translateY(-1px); }
@@ -368,7 +374,7 @@ h1 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 22px;
-  margin-top: 2.4rem;
+  margin-top: 2.2rem;
 }
 
 @media (max-width: 700px) {
@@ -411,12 +417,86 @@ h1 {
   line-height: 1.55;
 }
 
-/* ---------- INTEREST SELECTION ---------- */
+/* ---------- ROLE MODE SLIDER (FIXED) ---------- */
+.role-mode {
+  margin-bottom: 2.4rem;
+}
+
+.role-mode-track {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  height: 44px;
+  margin: 0 auto;
+  background: rgba(154,223,255,0.08);
+  border-radius: 999px;
+  border: 1px solid rgba(154,223,255,0.18);
+  overflow: hidden;
+}
+
+.role-mode-thumb {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(50% - 8px);
+  height: 36px;
+  border-radius: 999px;
+  background: linear-gradient(120deg, #9adfff, #ffffff);
+  box-shadow: 0 0 18px rgba(154,223,255,0.6);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.role-mode-track.right .role-mode-thumb {
+  transform: translateX(100%);
+}
+
+.role-mode-text {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  text-align: center;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.role-mode-text span {
+  opacity: 0.6;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.role-mode-track:not(.right) .role-mode-text span:first-child,
+.role-mode-track.right .role-mode-text span:last-child {
+  opacity: 1;
+  color: #0b0018;
+  font-weight: 600;
+}
+
+/* ---------- INTEREST SELECTION (INLINE) ---------- */
+.inline-interests {
+  margin-top: 3rem;
+  padding-top: 2.2rem;
+  border-top: 1px solid rgba(154,223,255,0.14);
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.8s ease, max-height 0.8s ease;
+}
+
+.inline-interests.show {
+  opacity: 1;
+  max-height: 800px;
+}
+
 .interest-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
-  margin-top: 2.4rem;
+  margin-top: 2rem;
 }
 
 @media (max-width: 800px) {
@@ -466,78 +546,6 @@ h1 {
   inset: 0;
   backdrop-filter: blur(6px);
 }
-
-/* ---------- WAITLIST ---------- */
-.waitlist-modal {
-  position: fixed;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  background: rgba(0,0,0,0.45);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.8s ease;
-  z-index: 30;
-}
-
-.waitlist-modal.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.waitlist-card {
-  max-width: 520px;
-  width: 92%;
-  padding: 52px 44px;
-  border-radius: 32px;
-  background: rgba(10, 15, 30, 0.9);
-  backdrop-filter: blur(24px);
-  box-shadow: 0 50px 140px rgba(0,0,0,0.65);
-  text-align: center;
-}
-
-.waitlist-title {
-  font-size: clamp(1.8rem, 5vw, 2.4rem);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  margin-bottom: 1.2rem;
-  background: linear-gradient(120deg, #d4e6ff, #9adfff, #ffffff);
-  -webkit-background-clip: text;
-  color: transparent;
-}
-
-.waitlist-subtitle {
-  font-size: 1rem;
-  opacity: 0.72;
-  margin-bottom: 2.6rem;
-  line-height: 1.6;
-}
-
-.waitlist-btn {
-  font-size: 0.85rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #cfefff;
-  text-decoration: none;
-  position: relative;
-  display: inline-block;
-  opacity: 0.85;
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  cursor: pointer;
-}
-
-.waitlist-btn:hover { opacity: 1; transform: translateY(-1px); }
-
-.waitlist-btn::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -10px;
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #9adfff, transparent);
-  opacity: 0.35;
-}
 </style>
 </head>
 
@@ -577,18 +585,30 @@ h1 {
       </div>
     </div>
 
-    <div class="action-btn" id="continueToRoles">Enter Stellar</div>
+    <div class="action-btn show" id="continueToRoles">Enter Stellar</div>
   </div>
 </div>
 
-<!-- ROLE SELECTION -->
+<!-- ROLE + INTEREST SELECTION (INLINE) -->
 <div class="roles" id="roles">
   <div class="card">
-    <div class="card-title">What kind of work are you interested in?</div>
+    <div class="card-title">How do you want to use Stellar?</div>
     <div class="card-subtitle">
-      This helps us surface the right opportunities for you.
+      Tell us what you're here for — and what kind of work/help you're interested in.
     </div>
 
+    <!-- ROLE MODE SLIDER -->
+    <div class="role-mode">
+      <div class="role-mode-track" id="roleModeTrack">
+        <div class="role-mode-thumb"></div>
+        <div class="role-mode-text">
+          <span>I am the help</span>
+          <span>I’m looking for help</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROLE GRID -->
     <div class="role-grid">
       <div class="role-card" data-role="research">
         <div class="role-title">Research</div>
@@ -603,20 +623,17 @@ h1 {
         <div class="role-desc">Advisory, consulting, operations, execution.</div>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- INTEREST SELECTION -->
-<div class="interests" id="interests">
-  <div class="card">
-    <div class="card-title">What are you interested in?</div>
-    <div class="card-subtitle">
-      Pick anything that feels relevant. You can always change this later.
+    <!-- INLINE INTERESTS -->
+    <div class="inline-interests" id="inlineInterests">
+      <div class="card-subtitle" style="margin-bottom:0;">
+        What are you interested in?
+      </div>
+
+      <div class="interest-grid" id="interestGrid"></div>
+
+      <div class="action-btn" id="continueToFeed">Continue</div>
     </div>
-
-    <div class="interest-grid" id="interestGrid"></div>
-
-    <div class="action-btn" id="continueToFeed">Continue</div>
   </div>
 </div>
 
@@ -624,17 +641,6 @@ h1 {
 <div class="feed" id="feed">
   <div class="feed-bg"></div>
   <div class="feed-overlay"></div>
-</div>
-
-<!-- WAITLIST -->
-<div class="waitlist-modal" id="waitlistModal">
-  <div class="waitlist-card">
-    <div class="waitlist-title">Access is opening soon</div>
-    <div class="waitlist-subtitle">
-      You’re early. We’re gradually opening the platform to maintain quality and fairness.
-    </div>
-    <div class="waitlist-btn" id="waitlistBtn">Join the waitlist</div>
-  </div>
 </div>
 
 <script>
@@ -672,7 +678,7 @@ setInterval(() => {
   wordIndex = (wordIndex + 1) % words.length;
 }, 2400);
 
-// ---------- SPOOFED USER DATA (PREMIUM, CLEAN) ----------
+// ---------- SPOOFED USER DATA ----------
 function getUserData() {
   const screenData = window.screen;
   const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -692,7 +698,6 @@ const cta = document.getElementById('cta');
 const content = document.getElementById('content');
 const report = document.getElementById('report');
 const roles = document.getElementById('roles');
-const interests = document.getElementById('interests');
 const feed = document.getElementById('feed');
 const dataGrid = document.getElementById('dataGrid');
 const monetizeSlider = document.getElementById('monetizeSlider');
@@ -700,8 +705,6 @@ const monetizeLabel = document.getElementById('monetizeLabel');
 const monetizeDetails = document.getElementById('monetizeDetails');
 const continueToRoles = document.getElementById('continueToRoles');
 const continueToFeed = document.getElementById('continueToFeed');
-const waitlistModal = document.getElementById('waitlistModal');
-const waitlistBtn = document.getElementById('waitlistBtn');
 
 cta.addEventListener('click', (e) => {
   e.preventDefault();
@@ -742,12 +745,23 @@ monetizeDetails.addEventListener('click', () => {
   alert("If enabled, anonymized, aggregated usage patterns help match you with higher-value opportunities — never personal identity or private content.");
 });
 
-// ---------- ROLES ----------
+// ---------- ROLES FLOW ----------
 continueToRoles.addEventListener('click', () => {
   report.classList.remove('show');
   roles.classList.add('show');
 });
 
+// ---------- ROLE MODE SLIDER ----------
+const roleModeTrack = document.getElementById('roleModeTrack');
+let roleMode = "help"; // help or hire
+
+roleModeTrack.addEventListener('click', () => {
+  roleModeTrack.classList.toggle('right');
+  roleMode = roleModeTrack.classList.contains('right') ? "hire" : "help";
+});
+
+// ---------- ROLE SELECTION ----------
+const inlineInterests = document.getElementById('inlineInterests');
 document.querySelectorAll('.role-card').forEach(card => {
   card.addEventListener('click', () => {
     document.querySelectorAll('.role-card').forEach(c => {
@@ -756,10 +770,8 @@ document.querySelectorAll('.role-card').forEach(card => {
     });
     card.classList.add('selected');
     card.style.opacity = "1";
-    setTimeout(() => {
-      roles.classList.remove('show');
-      interests.classList.add('show');
-    }, 450);
+
+    inlineInterests.classList.add('show');
   });
 });
 
@@ -784,23 +796,26 @@ interestsList.forEach(interest => {
   const pill = document.createElement('div');
   pill.className = 'interest-pill';
   pill.textContent = interest;
-  pill.addEventListener('click', () => pill.classList.toggle('active'));
+  pill.addEventListener('click', () => {
+    pill.classList.toggle('active');
+    updateContinueVisibility();
+  });
   interestGrid.appendChild(pill);
 });
 
+function updateContinueVisibility() {
+  const anyActive = document.querySelectorAll('.interest-pill.active').length > 0;
+  if (anyActive) {
+    continueToFeed.classList.add('show');
+  } else {
+    continueToFeed.classList.remove('show');
+  }
+}
+
 // ---------- CONTINUE TO FEED ----------
 continueToFeed.addEventListener('click', () => {
-  interests.classList.remove('show');
+  roles.classList.remove('show');
   feed.classList.add('show');
-
-  setTimeout(() => {
-    waitlistModal.classList.add('show');
-  }, 900);
-});
-
-// ---------- WAITLIST ----------
-waitlistBtn.addEventListener('click', () => {
-  alert("Waitlist signup coming soon.");
 });
 </script>
 
