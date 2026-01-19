@@ -575,3 +575,107 @@ function spawnShootingStar() {
   const star = document.createElement('div');
   star.className = 'shooting-star';
   star.style.left
+    star.style.left = Math.random() * 120 + 'vw';
+  star.style.animationDuration = (Math.random() * 2.5 + 2.8) + 's';
+  document.body.appendChild(star);
+  star.addEventListener('animationend', () => star.remove());
+}
+setInterval(spawnShootingStar, 1400);
+spawnShootingStar();
+
+// ---------- WORD FLIP ----------
+const words = document.querySelectorAll('.flip-inline .word');
+let wordIndex = 0;
+setInterval(() => {
+  words.forEach(w => w.classList.remove('active'));
+  words[wordIndex].classList.add('active');
+  wordIndex = (wordIndex + 1) % words.length;
+}, 2400);
+
+// ---------- SPOOFED USER DATA ----------
+function getUserData() {
+  const screenData = window.screen;
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  return [
+    { label: "Approximate location", value: "Los Angeles, California" },
+    { label: "IP address", value: "192.168.42.87" },
+    { label: "Device", value: "MacBook Pro · macOS" },
+    { label: "Browser", value: "Chrome 121" },
+    { label: "Language & timezone", value: `English (US) · ${tz}` },
+    { label: "Display", value: `${screenData.width} × ${screenData.height} · ${window.devicePixelRatio || 1}x` }
+  ];
+}
+
+// ---------- CTA FLOW ----------
+const cta = document.getElementById('cta');
+const content = document.getElementById('content');
+const report = document.getElementById('report');
+const dataGrid = document.getElementById('dataGrid');
+const monetizeSlider = document.getElementById('monetizeSlider');
+const monetizeLabel = document.getElementById('monetizeLabel');
+const monetizeDetails = document.getElementById('monetizeDetails');
+const continueToLaunch = document.getElementById('continueToLaunch');
+const launchScreen = document.getElementById('launchScreen');
+const easterEgg = document.getElementById('easterEgg');
+const roleScreen = document.getElementById('roleScreen');
+const roleButtons = document.querySelectorAll('.role-btn');
+
+cta.addEventListener('click', () => {
+  content.style.opacity = '0';
+  content.style.transform = 'scale(0.96)';
+  
+  const data = getUserData();
+  dataGrid.innerHTML = "";
+  data.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'data-card';
+    card.innerHTML = `
+      <div class="data-label">${item.label}</div>
+      <div class="data-value">${item.value}</div>
+    `;
+    dataGrid.appendChild(card);
+  });
+  
+  setTimeout(() => report.classList.add('show'), 600);
+});
+
+// ---------- MONETIZATION ----------
+monetizeSlider.addEventListener('input', () => {
+  if (monetizeSlider.value === "1") {
+    monetizeLabel.textContent = "Pay me for my data, please!";
+    monetizeLabel.style.color = "#9adfff";
+  } else {
+    monetizeLabel.textContent = "Maximize privacy";
+    monetizeLabel.style.color = "";
+  }
+});
+
+monetizeDetails.addEventListener('click', () => {
+  alert("If enabled, anonymized, aggregated usage patterns help match you with higher-value opportunities — never personal identity or private content. We also have developed a fun new way to use it to make advertising enjoyable for you 🤫.");
+});
+
+// ---------- NEXT TO ROLE SELECTION ----------
+continueToLaunch.addEventListener('click', () => {
+  report.classList.remove('show');
+  roleScreen.classList.add('show'); // show role selection instead of launch screen
+});
+
+// ---------- ROLE SELECTION ----------
+roleButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const selectedRole = btn.getAttribute('data-role');
+    console.log("Selected Role:", selectedRole); // Send to backend if needed
+
+    roleScreen.classList.remove('show');
+    launchScreen.classList.add('show');
+  });
+});
+
+// ---------- EASTER EGG ----------
+easterEgg.addEventListener('click', () => {
+  alert("Send your # to unlock 3 exclusive early access codes!");
+});
+</script>
+</body>
+</html>
