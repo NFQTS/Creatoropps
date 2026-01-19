@@ -438,7 +438,6 @@
         <div class="profile-section">
           <img id="profileImage" class="profile-image" src="" alt="Profile" />
           <div class="profile-info">
-            <h1 id="creatorName">Your Portfolio</h1>
             <p id="assetCount">0 assets • Upload 1 of each per day.</p>
           </div>
         </div>
@@ -612,7 +611,7 @@ function updateDashboard() {
   const uses = assets.reduce((s, a) => s + a.uses, 0);
   const top = assets.reduce((best, a) => a.earnings > (best?.earnings ?? 0) ? a : best, null);
 
-  document.getElementById('assetCount').textContent = `${assets.length} asset${assets.length !== 1 ? 's' : ''} • The void awaits`;
+  document.getElementById('assetCount').textContent = `${assets.length} asset${assets.length !== 1 ? 's' : ''} • Create More`;
   document.getElementById('totalEarnings').textContent = `$${total.toLocaleString()}`;
   document.getElementById('avgEarnings').textContent = `$${avg.toLocaleString()}`;
   document.getElementById('totalUses').textContent = uses.toLocaleString();
